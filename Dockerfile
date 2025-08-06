@@ -1,8 +1,20 @@
-FROM python:3.11
+# Use the official Node.js image as a base
+FROM node:16
 
-WORKDIR /app
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
 COPY . .
 
-RUN pip install -r requirements.txt
+# Expose the application port
+EXPOSE 5000
 
-CMD ["python", "-u", "server.py"]
+# Command to run the application
+CMD ["node", "src/server.js"]
